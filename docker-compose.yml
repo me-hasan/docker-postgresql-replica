@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres-1:
-    image: postgres:15.0
+    image: timescale/timescaledb:2.17.2-pg15
     container_name: postgres-1
     networks:
       - postgres
@@ -15,12 +15,13 @@ services:
       - ./postgres-1/pgdata:/data
       - ./postgres-1/config:/config
       - ./postgres-1/archive:/mnt/server/archive
+      - ./postgres-1/initdb:/docker-entrypoint-initdb.d
     ports:
       - "5005:5432"
     command: -c 'config_file=/config/postgresql.conf'
 
   postgres-2:
-    image: postgres:15.0
+    image: timescale/timescaledb:2.17.2-pg15
     container_name: postgres-2
     networks:
       - postgres
